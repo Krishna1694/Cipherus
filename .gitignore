@@ -1,0 +1,5 @@
+# Ignore tests and personal data
+test.py
+test2.py
+notes.txt
+tests/
