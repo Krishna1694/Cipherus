@@ -13,6 +13,8 @@ def generate_key(filename):
     strid = generate_random_strid()
     with open(filename, "wb") as key_file:
         key_file.write(key_signature + strid.encode() + b"::" + key)
+    
+    print(f"\nKey saved as {filename}")
 
 # Load secret key
 def load_key(secret_key_file):
@@ -67,19 +69,33 @@ def encrypt_file(filename, strid, key):
             original = file.read()
 
         if original.startswith(marker):
-            print("The file is already encrypted with cipherus!!")
+            print("\nThe file is already encrypted with cipherus!!")
+            input("Press enter to continue...")
             return
         
         fernet = Fernet(key)
         strid_hash = generate_hash(strid).encode()
         encrypted = marker + strid_hash + fernet.encrypt(original)  
 
-        with open(filename, "wb") as encrypted_file:
+        select = False
+        while not select:
+            choice = input("\nDo you want to overwrite the original file? (default 'y')(y/n): ").strip().lower()
+            if choice in ["y", "yes", ""]:
+                new_file = filename
+                select = True
+            elif choice in ["n", "no"]:
+                new_file = input("Enter a new filename to save the encrypted file: ").strip()
+                select = True
+            else:
+                print("Error: Enter valid choice")
+
+        with open(new_file, "wb") as encrypted_file:
             encrypted_file.write(encrypted)
 
-        print(f"File {filename} successfully encrypted")
+        print(f"\nFile {filename} successfully encrypted to {new_file}")
+        input("Press enter to continue...")
     except Exception as e:
-        print(f"An unexpected error occurred during encryption: {e}")
+        print(f"\nAn unexpected error occurred during encryption: {e}")
 
 
 # Decryption
@@ -90,12 +106,14 @@ def decrypt_file(filename, strid, key):
             encrypted = file.read()
 
         if not encrypted.startswith(marker):
-            print("The file is not encrypted with cipherus!!")
+            print("\nError: The file is not encrypted with cipherus!!")
+            input("Press enter to continue...")
             return
 
         strid_hash = generate_hash(strid).encode()
         if not check_hash(strid, encrypted):
-            print("Error: Hash mismatch — the key does not match this file or the file has been tampered with.")
+            print("\nError: Hash mismatch — the key does not match this file or the file has been tampered with.")
+            input("Press enter to continue...")
             return
         
         encrypted = encrypted[len(marker) + len(strid_hash):] 
@@ -103,14 +121,29 @@ def decrypt_file(filename, strid, key):
 
         decrypted = fernet.decrypt(encrypted)
 
-        with open(filename, "wb") as decrypted_file:
+        choice = input("\nDo you want to overwrite the original file? (default 'y')(y/n): ").strip().lower()
+        select = False
+        while not select:
+            if choice in ["y", "yes", ""]:
+                new_file = filename
+                select = True
+            elif choice in ["n", "no"]:
+                new_file = input("Enter a new filename to save the decrypted file: ").strip()
+                select = True
+            else:
+                print("Error: Enter valid choice")
+
+        with open(new_file, "wb") as decrypted_file:
             decrypted_file.write(decrypted)
 
-        print(f"File {filename} successfully decrypted")
+        print(f"\nFile {filename} successfully decrypted to {new_file}")
+        input("Press enter to continue...")
     except InvalidToken:
-        print("Error: Invalid key or file was not encrypted correctly. Decryption failed.")
+        print("\nError: Invalid key or file was not encrypted correctly. Decryption failed.")
+        input("Press enter to continue...")
     except Exception as e:
-        print(f"An unexpected error occurred during decryption: {e}")
+        print(f"\nAn unexpected error occurred during decryption: {e}")
+        input("Press enter to continue...")
 
 
 def main():
@@ -118,10 +151,11 @@ def main():
         print("\nCipherus Menu:")
         print("1. Encryption")
         print("2. Decryption")
-        print("3. Exit (Press 'ctrl + c' to quit)")
+        print("3. Help")
+        print("4. Exit (or press 'ctrl + c' to quit)")
 
         try:
-            choice = int(input("Option: "))
+            choice = int(input("\nOption: ").strip())
         except ValueError:
             print("Enter a valid number.")
             continue
@@ -130,6 +164,7 @@ def main():
             break
         except Exception as e:
             print(f"Error: {e}")
+            input("Press enter to continue...")
 
 # Choice 1
         if choice == 1:
@@ -140,11 +175,11 @@ def main():
             
             selected = False
             while not selected:
-                create_key_permission = input("Create a new secret key? (default y) (y/n): ")
+                create_key_permission = input("\nCreate a new secret key? (default y) (y/n): ").strip().lower()
                 create_key_permission = create_key_permission.lower()
 
                 if create_key_permission in ["y", "yes", ""]:
-                    secret_key_file = input("Enter a filename to store the cipher key (press Enter for default 'secret.cphkey'): ") 
+                    secret_key_file = input("Enter a filename to store the cipher key (press Enter for default 'secret.cphkey'): ").strip()
                     if not secret_key_file:
                         secret_key_file = "secret.cphkey"
                         selected = True
@@ -184,14 +219,17 @@ def main():
             selected_file = input("Select a file to Decrypt: ")
             if not os.path.isfile(selected_file):
                 print(f"Error: file '{selected_file}' not found")
+                input("Press enter to continue...")
                 continue
 
             while True:
                 secret_key_file = input("Select the cipher key (must have '.cphkey' extension): ")
                 if not secret_key_file.endswith(".cphkey"):
                     print("Error: Wrong file, '.cphkey' extension not found")
+                    input("Press enter to continue...")
                 elif not os.path.isfile(secret_key_file):
                     print(f"Error: file {secret_key_file} not found")
+                    input("Press enter to continue...")
                 else:
                     break
 
@@ -203,13 +241,30 @@ def main():
             except ValueError as ve:
                 print(f"Error: {ve}")
 
+
 # Choice 3
         elif choice == 3:
+            print('''\n=== Welcome to Cipherus ===
+
+Follow the on-screen instructions carefully — that's all you need!
+
+[!] Important:
+- DO NOT modify or tamper with the secret key (.cphkey) or encrypted files after encryption.
+- Doing so will result in decryption failure.
+
+>>> Enjoy secure file protection with Cipherus!
+''')
+            input("Press enter to continue...")
+
+
+# Choice 4
+        elif choice == 4:
             print("Exiting Cipherus.")
             break
 
         else:
-            print("Invalid choice. Please select between 1-3.")
+            print("Invalid choice. Please select between 1-4.")
+            input("Press enter to continue...")
 
 
 # Main Start
