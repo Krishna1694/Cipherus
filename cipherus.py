@@ -7,6 +7,26 @@ import hashlib
 marker = b"CipherusENC::"
 key_signature = b"CipherusKEY::"
 
+# Intro
+def cipherus_intro():
+    os.system('cls' if os.name == 'nt' else 'clear')
+    intro_text = """
+    
+     ██████╗██╗██████╗ ██╗  ██╗███████╗██████╗ ██╗   ██╗███████╗    
+    ██╔════╝██║██╔══██╗██║  ██║██╔════╝██╔══██╗██║   ██║██╔════╝    
+    ██║     ██║██████╔╝███████║█████╗  ██████╔╝██║   ██║███████╗    
+    ██║     ██║██╔═══╝ ██╔══██║██╔══╝  ██╔══██╗██║   ██║╚════██║    
+    ╚██████╗██║██║     ██║  ██║███████╗██║  ██║╚██████╔╝███████║    
+     ╚═════╝╚═╝╚═╝     ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝     
+                                                                
+            ░ Cipherus — File Encryption with Integrity ░
+
+              ▸ Secures files using layered encryption
+    """
+    print(intro_text)
+    print("\n[+] Initializing Cipherus...\n")
+
+
 # Generate a secret key
 def generate_key(filename):
     key = Fernet.generate_key()
@@ -147,6 +167,7 @@ def decrypt_file(filename, strid, key):
 
 
 def main():
+    cipherus_intro()
     while True:
         print("\nCipherus Menu:")
         print("1. Encryption")
