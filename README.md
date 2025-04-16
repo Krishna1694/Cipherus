@@ -1,3 +1,6 @@
+![Cipherus Banner](/assets/Cipherus%20.png)
+
+
 # 🔐 Cipherus
 
 **Cipherus** is a powerful, personal encryption tool built with precision and pride. At its core, Cipherus uses **Fernet encryption**, which combines **AES-128 (CBC mode)** with **HMAC-SHA256**, ensuring both confidentiality and integrity of your files. It’s layered with signature checks, optional obfuscation, and foolproof validation to prevent misuse or tampering.
