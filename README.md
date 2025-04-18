@@ -1,11 +1,11 @@
 ![Cipherus Banner](/assets/Cipherus%20.png)
 
 
-# 🔐 Cipherus
+# Cipherus
 
 **Cipherus** is a powerful, personal encryption tool built with precision and pride. At its core, Cipherus uses **Fernet encryption**, which combines **AES-128 (CBC mode)** with **HMAC-SHA256**, ensuring both confidentiality and integrity of your files. It’s layered with signature checks, optional obfuscation, and foolproof validation to prevent misuse or tampering.
 
-### 🧠 Why Cipherus?
+### Why Cipherus?
 
 This isn’t just another file locker. Cipherus is a tool I’ve built and hardened from scratch, combining modern cryptographic standards with custom logic. It’s minimal, elegant, and **as of now, uncrackable** by any known brute-force or cryptanalytic method — unless someone has your key.
 
@@ -16,7 +16,7 @@ I'm genuinely proud of what Cipherus has become — it’s not only secure but a
 - Verifies `.cphkey` compatibility ✅  
 - Protects you from yourself with clear checks and confirmations ✅  
 
-### 💡 What Cipherus Uses
+### What Cipherus Uses
 
 - **AES-128 (CBC)** via Fernet (Cryptography library)
 - **HMAC-SHA256** for message authentication
@@ -24,7 +24,7 @@ I'm genuinely proud of what Cipherus has become — it’s not only secure but a
 - **Custom `.cphkey` format** with embedded signature
 - **Tamper detection**, **overwrite protection**, and more
 
-### ⚠️ Trust the Code, Not Just the Hype
+### Trust the Code, Not Just the Hype
 
 Cipherus doesn’t rely on security by obscurity. It follows strong, proven standards.
 
@@ -33,20 +33,20 @@ Cipherus knows, and it won’t decrypt garbage.**
 
 ---
 
-## ⚙️ Features
+## Features
 
-- 🔒 File encryption and decryption using `cryptography.fernet`
-- 🧠 Unique hash generation tied to your key
-- 🔐 Custom `.cphkey` format with embedded signature
-- 🛡️ Prevents re-encryption of already encrypted files
-- ✅ Marker validation to ensure file integrity
-- 📄 Menu-driven terminal interface
-- 💾 Option to save encrypted/decrypted output to a new file
-- 🚫 Error handling and user-friendly messages
+- File encryption and decryption using `cryptography.fernet`
+- Unique hash generation tied to your key
+- Custom `.cphkey` format with embedded signature
+- Prevents re-encryption of already encrypted files
+- Marker validation to ensure file integrity
+- Menu-driven terminal interface
+- Option to save encrypted/decrypted output to a new file
+- Error handling and user-friendly messages
 
 ---
 
-## 🧪 Requirements
+## Requirements
 
 Install requirements using:
 
@@ -56,7 +56,7 @@ pip install -r requirements.txt
 
 ---
 
-## 📝 How to Use
+## How to Use
 
 1. **Run the script**  
 ```bash
@@ -102,5 +102,5 @@ Tampering will cause decryption to fail.
 
 - Can easily extend it with CLI arguments or a GUI
 
-## 📁 License
+## License
 This project is licensed under the Creative Commons Non-Commercial License.
